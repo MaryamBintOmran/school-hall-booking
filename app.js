@@ -102,6 +102,8 @@ form.addEventListener("submit", async e => {
   message.textContent = "تم تسجيل الحجز بنجاح.";
   form.reset();
   await render();
+  const card = document.getElementById("bookingCard"); card.hidden = false; card.innerHTML = <div style="border:2px solid #c5a45b; border-radius:16px; padding:24px; margin-top:16px; text-align:center; background:#fffdf7; color:#173f35;"> <h2>دار مريم</h2> <h3>بطاقة حجز القاعة</h3> <p><strong>الغرض:</strong> ${escapeHtml(booking.purpose)}</p> <p><strong>التاريخ:</strong> ${fmtDate(booking.booking_date)}</p> <p><strong>الوقت:</strong> ${booking.start_time} - ${booking.end_time}</p> </div> <button type="button" id="downloadCard">تنزيل بطاقة الحجز PNG</button>;
+document.getElementById("downloadCard").addEventListener("click", () => { alert("الخطوة التالية بنضيف تنزيل البطاقة كصورة PNG."); });
 });
 document.getElementById("exportBtn").addEventListener("click", async () => {
   const bookings = await readBookings();
