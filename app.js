@@ -40,7 +40,7 @@ bookings.sort((a, b) => (a.date + a.start).localeCompare(b.date + b.start) );
 count.textContent = `${bookings.length} حجز`;
 if (!bookings.length) { list.innerHTML = '<div class="empty">لا توجد حجوزات مسجلة للحين</div>'; return; }
 list.innerHTML = bookings.map(b => `<article class="booking"> <div> <strong>${escapeHtml(b.purpose)}</strong> <small>${fmtDate(b.date)} · ${b.start} - ${b.end}</small> </div> </article>`).join("");
-}
+                        }
 function escapeHtml(s) {
   return String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 }
