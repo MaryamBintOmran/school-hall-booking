@@ -36,6 +36,7 @@ const readBookings = async () => {
 
   return data.map(b => ({
     id: b.id,
+    teacher_name: b.teacher_name.
     purpose: b.purpose,
     date: b.booking_date,
     start: b.start_time,
