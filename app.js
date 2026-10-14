@@ -190,7 +190,7 @@ if (downloadButton) {
    
    ctx.font = "bold 22px Arial";
 ctx.fillStyle = "#173f35";
-ctx.fillText("تصميم الموقع: دانة ساكت المحيني", 450, 570); 
+ctx.fillText("تصميم الموقع : أ/ دانه ساكت المحيني", 450, 570); 
      });
     
     const link = document.createElement("a");
