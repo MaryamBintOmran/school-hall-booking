@@ -140,7 +140,7 @@ form.addEventListener("submit", async e => {
   message.textContent = "تم تسجيل الحجز بنجاح.";
   form.reset();
   await render();
-
+document.getElementById("downloadCard").hidden = false;
   const card = document.getElementById("bookingCard");
   if (card) {
     card.hidden = false;
