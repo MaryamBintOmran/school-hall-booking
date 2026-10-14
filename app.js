@@ -190,7 +190,7 @@ if (downloadButton) {
     });
     ctx.font = "bold 22px Arial";
     ctx.fillStyle = "#173f35";
-    ctx.fillText("تصميم الموقع : أ/ دانه ساكت المحيني", 450, 590);
+    ctx.fillText("تصميم الموقع: أ/دانه ساكت المحيني", 450, 590);
 
     const link = document.createElement("a");
     link.download = "بطاقة-حجز-دار-مريم.png";
