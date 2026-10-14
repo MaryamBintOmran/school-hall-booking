@@ -187,10 +187,11 @@ if (downloadButton) {
     lines.forEach(line => {
       ctx.fillText(line, 450, y);
       y += 55;
-    });
+   
    ctx.font = "bold 22px Arial";
 ctx.fillStyle = "#173f35";
 ctx.fillText("تصميم الموقع: دانة ساكت المحيني", 450, 570); 
+     });
     
     const link = document.createElement("a");
     link.download = "بطاقة-حجز-دار-مريم.png";
