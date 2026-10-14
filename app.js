@@ -103,18 +103,42 @@ form.addEventListener("submit", async e => {
   form.reset();
   await render();
 });
-document.getElementById("exportBtn").addEventListener("click", async () => { const bookings = await readBookings();
-const rows = [ ["اسم المعلمة", "الغرض", "التاريخ", "البداية", "النهاية"], ...bookings.map(b => [ b.teacher, b.purpose, b.date, b.start, b.end ]) ];
-const csv = "\uFEFF" + rows.map(row => row.map(v =>String(v ?? "")).join(",")).join("\r\n");
-const url = URL.createObjectURL( new Blob([csv], { type: "text/csv;charset=utf-8;" }) );
-const a = document.createElement("a"); a.href = url; a.download = "school-hall-bookings.csv"; a.click(); URL.revokeObjectURL(url); });
-document.getElementById("clearBtn").addEventListener("click", async () => {
+document.getElementById("exportBtn").addEventListener("click", async () => {
+  const bookings = await readBookings();
+
+  const rows = [
+    ["اسم المعلمة", "الغرض", "التاريخ", "البداية", "النهاية"],
+    ...bookings.map(b => [
+      b.teacher,
+      b.purpose,
+      b.date,
+      b.start,
+      b.end
+    ])
+  ];
+
+  const csv = "\uFEFF" + rows.map(row =>
+    row.map(v => String(v ?? "")).join(",")
+  ).join("\r\n");
+
+  const url = URL.createObjectURL(
+    new Blob([csv], { type: "text/csv;charset=utf-8;" })
+  );
+
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "school-hall-bookings.csv";
+  a.click();
+  URL.revokeObjectURL(url);
+});
+
+document.getElementById("clearBtn").addEventListener("click", () => {
   if (!confirm("متأكدة تبين مسح جميع الحجوزات المحفوظة؟")) {
     return;
   }
 
   message.className = "";
   message.textContent = "هذا الزر غير مفعّل حاليًا لحماية الحجوزات.";
-
 });
+
 render();
