@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>حجز صالة المدرسة</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="hero">
+    <div class="ornament">✦</div>
+    <p class="eyebrow">نظام المواعيد المدرسية</p>
+    <h1>حجز صالة المدرسة</h1>
+    <p class="subtitle">تنظيم الحجوزات بكل سهولة</p>
+  </header>
+
+  <main class="container">
+    <section class="panel">
+      <div class="section-title">
+        <div><span class="eyebrow">احجزي موعدج</span><h2>طلب حجز جديد</h2></div>
+        <span class="seal">دار<br>المدرسة</span>
+      </div>
+      <form id="bookingForm">
+        <label>اسم المعلمة
+          <input id="teacher" required placeholder="اكتبي الاسم">
+        </label>
+        <label>الغرض من الحجز
+          <input id="purpose" required placeholder="مثال: اجتماع أو فعالية">
+        </label>
+        <div class="two">
+          <label>التاريخ<input id="date" type="date" required></label>
+          <label>عدد الحاضرات<input id="attendees" type="number" min="1" value="10" required></label>
+        </div>
+        <div class="two">
+          <label>وقت البداية<input id="start" type="time" required></label>
+          <label>وقت النهاية<input id="end" type="time" required></label>
+        </div>
+        <button type="submit">تحققي من الموعد واحجزي</button>
+        <p class="hint">هذه نسخة تجريبية: الحجوزات تُحفظ على هذا الجهاز فقط إلى أن يتم ربط قاعدة بيانات ونشر الموقع.</p>
+      </form>
+      <div id="message" role="status" aria-live="polite"></div>
+    </section>
+
+    <section class="panel">
+      <div class="section-title">
+        <div><span class="eyebrow">المواعيد</span><h2>الحجوزات المسجلة</h2></div>
+        <span class="count" id="count">0 حجز</span>
+      </div>
+      <p class="hint">يعرض هذا التقويم التاريخ والوقت والغرض فقط، ولا يعرض اسم صاحبة الحجز.</p>
+      <div id="bookingList" class="booking-list"></div>
+    </section>
+
+    <section class="panel admin">
+      <span class="eyebrow">للاستخدام الإداري</span>
+      <h2>إدارة الحجوزات</h2>
+      <p>هذه اللوحة في النسخة التجريبية ليست محمية بكلمة مرور. قبل مشاركة الرابط رسميًا، يجب إعداد دخول إداري وقاعدة بيانات.</p>
+      <button id="exportBtn" class="secondary" type="button">تنزيل قائمة الحجوزات CSV</button>
+      <button id="clearBtn" class="danger" type="button">مسح حجوزات هذا الجهاز</button>
+    </section>
+  </main>
+  <footer>© نظام حجز صالة المدرسة <span>•</span> تصميم أخضر وذهبي</footer>
+  <script src="app.js"></script>
+</body>
+</html>
