@@ -103,8 +103,45 @@ form.addEventListener("submit", async e => {
   form.reset();
   await render();
   const card = document.getElementById("bookingCard"); card.hidden = false; card.innerHTML = <div style="border:2px solid #c5a45b; border-radius:16px; padding:24px; margin-top:16px; text-align:center; background:#fffdf7; color:#173f35;"> <h2>دار مريم</h2> <h3>بطاقة حجز القاعة</h3> <p><strong>الغرض:</strong> ${escapeHtml(booking.purpose)}</p> <p><strong>التاريخ:</strong> ${fmtDate(booking.booking_date)}</p> <p><strong>الوقت:</strong> ${booking.start_time} - ${booking.end_time}</p> </div> <button type="button" id="downloadCard">تنزيل بطاقة الحجز PNG</button>;
-document.getElementById("downloadCard").addEventListener("click", () => { alert("الخطوة التالية بنضيف تنزيل البطاقة كصورة PNG."); });
-});
+document.getElementById("downloadCard").addEventListener("click", async () => {
+  const card = document.getElementById("bookingCard");
+
+  const canvas = document.createElement("canvas");
+  canvas.width = 900;
+  canvas.height = 650;
+
+  const ctx = canvas.getContext("2d");
+  ctx.fillStyle = "#fffdf7";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  ctx.strokeStyle = "#c5a45b";
+  ctx.lineWidth = 8;
+  ctx.strokeRect(20, 20, 860, 610);
+
+  ctx.textAlign = "center";
+  ctx.fillStyle = "#173f35";
+  ctx.font = "bold 52px Arial";
+  ctx.fillText("دار مريم, 450, 115");
+
+  ctx.font = "bold 34px Arial";
+  ctx.fillText("بطاقة حجز القاعة, 450, 180");
+
+  const lines = card.innerText.split("\n").filter(Boolean);
+  ctx.font = "28px Arial";
+
+  let y = 280;
+  lines.forEach(line => {
+    if (!line.includes("تنزيل بطاقة")) {
+      ctx.fillText(line, 450, y);
+      y += 55;
+    }
+  });
+
+  const link = document.createElement("a");
+  link.download = "بطاقة-حجز-دار-مريم.png";
+  link.href = canvas.toDataURL("image/png");
+  link.click();
+ });
 document.getElementById("exportBtn").addEventListener("click", async () => {
   const bookings = await readBookings();
 
