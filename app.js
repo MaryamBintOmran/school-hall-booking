@@ -1,3 +1,7 @@
+const db = window.supabase.createClient(
+  "https://ogpmyfkbqrvfeoodhqva.supabase.co",
+  "sb_publishable_xAcsee1CId20r8yweYxdIg_2KcxDwr_"
+);
 const STORAGE_KEY = "schoolHallBookingsDemo";
 const form = document.getElementById("bookingForm");
 const message = document.getElementById("message");
