@@ -73,7 +73,7 @@ async function render() {
     <article class="booking">
       <div>
         <strong>${escapeHtml(b.purpose)}</strong>
-<br><small>صاحبة الحجز: ${escapeHtml(b.teacher_name)}</small>
+<br><small>teacher_name: ${escapeHtml(b.teacher_name)}</small>
         <small>${fmtDate(b.date)} · ${escapeHtml(b.start)} - ${escapeHtml(b.end)}</small>
       </div>
     </article>
