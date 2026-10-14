@@ -128,10 +128,10 @@ form.addEventListener("submit", async e => {
   ctx.textAlign = "center";
   ctx.fillStyle = "#173f35";
   ctx.font = "bold 52px Arial";
-  ctx.fillText("دار مريم, 450, 115");
+  ctx.fillText("دار مريم", 450, 115);
 
   ctx.font = "bold 34px Arial";
-  ctx.fillText("بطاقة حجز القاعة, 450, 180");
+  ctx.fillText("بطاقة حجز القاعة", 450, 180);
 
   const lines = card.innerText.split("\n").filter(Boolean);
   ctx.font = "28px Arial";
