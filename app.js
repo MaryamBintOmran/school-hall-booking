@@ -181,7 +181,7 @@ if (downloadButton) {
     ctx.fillText("بطاقة حجز القاعة", 450, 180);
     ctx.font = "bold 22px Arial";
     ctx.fillStyle = "#173f35";
-    ctx.fillText("تصميم الموقع: أ/دانه ساكت المحيني", 450, 590);
+    ctx.fillText("تصميم الموقع: أ/دانه ساكت المحيني", 450, 570);
 
     const lines = card.innerText.split("\n").filter(Boolean)
       .filter(line => !line.includes("دار مريم") && !line.includes("بطاقة حجز القاعة"));
