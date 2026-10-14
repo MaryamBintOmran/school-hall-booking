@@ -13,3 +13,6 @@ button{border:0;border-radius:10px;padding:13px 16px;background:var(--green);col
 .booking-list{display:grid;gap:10px}.booking{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px;border:1px solid var(--line);border-radius:12px;background:#fff}.booking strong{display:block}.booking small{color:var(--muted)}.empty{text-align:center;padding:25px;color:var(--muted);border:1px dashed var(--line);border-radius:12px}
 .admin{background:#f5f0e4}.admin p{font-size:13px;line-height:1.9;color:var(--muted)}footer{text-align:center;color:var(--muted);padding:0 15px 28px;font-size:12px}footer span{color:var(--gold);padding:0 6px}
 @media(max-width:560px){.panel{padding:18px}.two{grid-template-columns:1fr}.hero{padding-top:34px}.secondary,.danger{width:100%;margin:5px 0}.booking{align-items:flex-start;flex-direction:column}}
+/* إخفاء قسم الإدارة من واجهة الموقع */
+.panel.admin {
+  display: none !important;
