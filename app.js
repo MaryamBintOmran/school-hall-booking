@@ -15,7 +15,7 @@ const pageHeading = Array.from(document.querySelectorAll("h1")).find(el =>
 if (pageHeading && !document.getElementById("siteDesignerCredit")) {
   const credit = document.createElement("p");
   credit.id = "siteDesignerCredit";
-  credit.textContent = "تصميم الموقع: دانه ساكت المحيني";
+  credit.textContent = "تصميم الموقع: أ/دانه ساكت المحيني";
   credit.style.cssText = "margin:6px 0 18px;text-align:center;font-size:14px;color:#c5a45b;font-weight:600;";
   pageHeading.insertAdjacentElement("afterend", credit);
 }
@@ -188,6 +188,9 @@ if (downloadButton) {
       ctx.fillText(line, 450, y);
       y += 55;
     });
+    ctx.font = "bold 22px Arial";
+    ctx.fillStyle = "#173f35";
+    ctx.fillText("تصميم الموقع : أ/ دانه ساكت المحيني", 450, 590);
 
     const link = document.createElement("a");
     link.download = "بطاقة-حجز-دار-مريم.png";
