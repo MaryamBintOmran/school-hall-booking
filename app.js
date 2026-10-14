@@ -179,6 +179,9 @@ if (downloadButton) {
     ctx.fillText("دار مريم", 450, 115);
     ctx.font = "bold 34px Arial";
     ctx.fillText("بطاقة حجز القاعة", 450, 180);
+    ctx.font = "bold 22px Arial";
+    ctx.fillStyle = "#173f35";
+    ctx.fillText("تصميم الموقع: أ/دانه ساكت المحيني", 450, 590);
 
     const lines = card.innerText.split("\n").filter(Boolean)
       .filter(line => !line.includes("دار مريم") && !line.includes("بطاقة حجز القاعة"));
@@ -188,10 +191,7 @@ if (downloadButton) {
       ctx.fillText(line, 450, y);
       y += 55;
     });
-    ctx.font = "bold 22px Arial";
-    ctx.fillStyle = "#173f35";
-    ctx.fillText("تصميم الموقع: أ/دانه ساكت المحيني", 450, 590);
-
+    
     const link = document.createElement("a");
     link.download = "بطاقة-حجز-دار-مريم.png";
     link.href = canvas.toDataURL("image/png");
