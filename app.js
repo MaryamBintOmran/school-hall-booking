@@ -22,7 +22,7 @@ function render() {
   list.innerHTML = bookings.map(b => `
     <article class="booking">
       <div><strong>${escapeHtml(b.purpose)}</strong><small>${fmtDate(b.date)} • ${b.start} إلى ${b.end}</small></div>
-      <span class="count">${b.attendees} حاضرات</span>
+    
     </article>`).join("");
 }
 function escapeHtml(s) {
@@ -35,7 +35,7 @@ form.addEventListener("submit", e => {
     teacher: document.getElementById("teacher").value.trim(),
     purpose: document.getElementById("purpose").value.trim(),
     date: document.getElementById("date").value,
-    attendees: Number(document.getElementById("attendees").value),
+    
     start: document.getElementById("start").value,
     end: document.getElementById("end").value
   };
@@ -51,7 +51,7 @@ form.addEventListener("submit", e => {
 });
 document.getElementById("exportBtn").addEventListener("click", () => {
   const bookings = readBookings();
-  const rows = [["اسم المعلمة","الغرض","التاريخ","البداية","النهاية","عدد الحاضرات"], ...bookings.map(b => [b.teacher,b.purpose,b.date,b.start,b.end,b.attendees])];
+  const rows = [["اسم المعلمة","الغرض","التاريخ","البداية","النهاية"], ...bookings.map(b => [b.teacher,b.purpose,b.date,b.start,b.end])];
   const csv = "\uFEFF" + rows.map(row => row.map(v => `"${String(v ?? "").replace(/"/g,'""')}"`).join(",")).join("\r\n");
   const url = URL.createObjectURL(new Blob([csv], {type:"text/csv;charset=utf-8;"}));
   const a = document.createElement("a"); a.href=url; a.download="school-hall-bookings.csv"; a.click(); URL.revokeObjectURL(url);
