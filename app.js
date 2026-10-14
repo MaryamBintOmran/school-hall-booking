@@ -24,7 +24,7 @@ if (pageHeading && !document.getElementById("siteDesignerCredit")) {
 const readBookings = async () => {
   const { data, error } = await db
     .from("hall_booking")
-    .select("id,purpose,booking_date,start_time,end_time")
+    .select("id,teacher_name,purpose,booking_date,start_time,end_time")
     .order("booking_date", { ascending: true });
 
   if (error) {
