@@ -215,26 +215,51 @@ if (downloadButton) {
     ctx.fillStyle = "#173f35";
     ctx.fillText("تصميم الموقع: أ/ دانة ساكت المحيني", 450, 610);
 
-    const dataUrl = canvas.toDataURL("image/png");
-    // iOS Safari may ignore the download attribute. Open the image so the
-    // user can press and hold it and save it to Photos.
-    const opened = window.open(dataUrl, "_blank");
-    if (!opened) {
-      message.className = "success";
-      message.textContent = "إذا ما فتحت الصورة، اسمحي بالنوافذ المنبثقة ثم أعيدي المحاولة.";
-      const preview = document.createElement("a");
-      preview.href = dataUrl;
-      preview.target = "_blank";
-      preview.rel = "noopener";
-      preview.textContent = "افتحي صورة بطاقة الحجز للحفظ";
-      preview.style.display = "block";
-      preview.style.marginTop = "12px";
-      preview.style.textAlign = "center";
-      card.appendChild(preview);
-    } else {
-      message.className = "success";
-      message.textContent = "فتحت صورة البطاقة بصفحة جديدة. على الآيفون اضغطي مطولًا على الصورة ثم اختاري حفظ في الصور.";
+    // Open an HTML page from the user tap, then show the generated PNG inside it.
+    // This avoids iOS Safari opening a blank tab for a data URL.
+    const imageWindow = window.open("", "_blank");
+    if (!imageWindow) {
+      message.className = "error";
+      message.textContent = "سفاري منع فتح البطاقة. اسمحي بالنوافذ المنبثقة ثم اضغطي تحميل البطاقة مرة ثانية.";
+      return;
     }
+
+    imageWindow.document.open();
+    imageWindow.document.write(`<!doctype html>
+      <html lang="ar" dir="rtl">
+      <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>بطاقة حجز دار مريم</title>
+        <style>
+          body { margin: 0; padding: 16px; background: #f4f1e8; color: #173f35;
+                 font-family: Arial, sans-serif; text-align: center; }
+          p { line-height: 1.7; }
+          img { display: block; width: 100%; max-width: 900px; height: auto;
+                margin: 16px auto; background: #fffdf7; }
+        </style>
+      </head>
+      <body>
+        <p><strong>بطاقة الحجز جاهزة</strong></p>
+        <p>لحفظها على الآيفون: اضغطي مطولًا على الصورة ثم اختاري «حفظ في الصور» أو «إضافة إلى الصور».</p>
+        <img id="booking-card-image" alt="بطاقة حجز دار مريم">
+      </body>
+      </html>`);
+    imageWindow.document.close();
+
+    canvas.toBlob(blob => {
+      if (!blob) {
+        imageWindow.document.body.insertAdjacentText("beforeend", " تعذر إنشاء صورة البطاقة. أغلقي الصفحة وحاولي مرة أخرى.");
+        return;
+      }
+      const imageUrl = URL.createObjectURL(blob);
+      const image = imageWindow.document.getElementById("booking-card-image");
+      image.onload = () => URL.revokeObjectURL(imageUrl);
+      image.src = imageUrl;
+    }, "image/png");
+
+    message.className = "success";
+    message.textContent = "فتحت بطاقة الحجز في تبويب جديد. اضغطي مطولًا على الصورة واختاري حفظها في الصور.";
   });
 }
 
