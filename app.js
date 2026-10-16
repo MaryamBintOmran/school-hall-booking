@@ -24,7 +24,7 @@ if (pageHeading && !document.getElementById("siteDesignerCredit")) {
 const readBookings = async () => {
   const { data, error } = await db
     .from("hall_booking")
-    .select("id,teacher_name,purpose,booking_date,start_time,end_time")
+    .select("id,purpose,booking_date,start_time,end_time")
     .order("booking_date", { ascending: true });
 
   if (error) {
@@ -36,7 +36,6 @@ const readBookings = async () => {
 
   return data.map(b => ({
     id: b.id,
-    teacher_name: b.teacher_name,
     purpose: b.purpose,
     date: b.booking_date,
     start: b.start_time,
@@ -74,7 +73,6 @@ async function render() {
     <article class="booking">
       <div>
         <strong>${escapeHtml(b.purpose)}</strong>
-<small>${escapeHtml(b.teacher_name)}</small>
         <small>${fmtDate(b.date)} · ${escapeHtml(b.start)} - ${escapeHtml(b.end)}</small>
       </div>
     </article>
@@ -117,7 +115,7 @@ form.addEventListener("submit", async e => {
     return;
   }
 
-  const conflict = (existingBookings || []).some(b =>
+  const conflict = (existingBookings ?? []).some(b =>
     b.start_time < booking.end_time && booking.start_time < b.end_time
   );
 
@@ -182,24 +180,61 @@ if (downloadButton) {
     ctx.font = "bold 34px Arial";
     ctx.fillText("بطاقة حجز القاعة", 450, 180);
 
-    const lines = card.innerText.split("\\n").filter(Boolean)
+    const lines = card.innerText.split("\n").filter(Boolean)
       .filter(line => !line.includes("دار مريم") && !line.includes("بطاقة حجز القاعة"));
     ctx.font = "28px Arial";
     let y = 270;
     lines.forEach(line => {
-      ctx.fillText(line, 450, y);
-      y += 55;
+      // Wrap longer lines so they remain inside the card.
+      const maxWidth = 780;
+      if (ctx.measureText(line).width <= maxWidth) {
+        ctx.fillText(line, 450, y);
+        y += 55;
+      } else {
+        const words = line.split(" ");
+        let part = "";
+        for (const word of words) {
+          const test = part ? `${part} ${word}` : word;
+          if (ctx.measureText(test).width > maxWidth && part) {
+            ctx.fillText(part, 450, y);
+            y += 42;
+            part = word;
+          } else {
+            part = test;
+          }
+        }
+        if (part) {
+          ctx.fillText(part, 450, y);
+          y += 55;
+        }
+      }
     });
 
     // Add the designer credit beneath the booking confirmation on the PNG card.
     ctx.font = "bold 22px Arial";
     ctx.fillStyle = "#173f35";
-    ctx.fillText("تصميم الموقع: أ/ دانة ساكت المحيني", 450, 570);
+    ctx.fillText("تصميم الموقع: أ/ دانة ساكت المحيني", 450, 610);
 
-    const link = document.createElement("a");
-    link.download = "بطاقة-حجز-دار-مريم.png";
-    link.href = canvas.toDataURL("image/png");
-    link.click();
+    const dataUrl = canvas.toDataURL("image/png");
+    // iOS Safari may ignore the download attribute. Open the image so the
+    // user can press and hold it and save it to Photos.
+    const opened = window.open(dataUrl, "_blank");
+    if (!opened) {
+      message.className = "success";
+      message.textContent = "إذا ما فتحت الصورة، اسمحي بالنوافذ المنبثقة ثم أعيدي المحاولة.";
+      const preview = document.createElement("a");
+      preview.href = dataUrl;
+      preview.target = "_blank";
+      preview.rel = "noopener";
+      preview.textContent = "افتحي صورة بطاقة الحجز للحفظ";
+      preview.style.display = "block";
+      preview.style.marginTop = "12px";
+      preview.style.textAlign = "center";
+      card.appendChild(preview);
+    } else {
+      message.className = "success";
+      message.textContent = "فتحت صورة البطاقة بصفحة جديدة. على الآيفون اضغطي مطولًا على الصورة ثم اختاري حفظ في الصور.";
+    }
   });
 }
 
